@@ -2,6 +2,12 @@ name: Run OLETOKEN Bot
 
 on:
   workflow_dispatch:
+    inputs:
+      guild_id:
+        description: 'Discord Server ID (留空使用secrets)'
+        required: false
+        type: string
+        default: ''
   schedule:
     # 每6小时重启 (GitHub Actions 6小时超时限制)
     - cron: "0 */6 * * *"
@@ -12,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-      GUILD_ID: ${{ secrets.GUILD_ID }}
+      GUILD_ID: ${{ inputs.guild_id != '' && inputs.guild_id || secrets.GUILD_ID }}
       OLETOKEN_API_URL: ${{ secrets.OLETOKEN_API_URL }}
       OLETOKEN_SITE_URL: ${{ secrets.OLETOKEN_SITE_URL }}
     
