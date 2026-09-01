@@ -23,11 +23,6 @@ OLETOKEN 中转站
 │   ├── #tech-talk       - 技术交流
 │   ├── #support         - 问题反馈
 │   └── #suggestions     - 功能建议
-├── 🤖 模型讨论
-│   ├── #claude-models   - Claude模型
-│   ├── #gpt-models      - GPT模型
-│   ├── #cn-models        - 国产模型
-│   └── #image-models    - 图像模型
 ├── 💻 开发者
 │   ├── #api-integration - API接入
 │   ├── #sdk-code        - SDK与代码
@@ -48,7 +43,7 @@ OLETOKEN 中转站
 | 🟢 Developer | 绿色 | 普通成员+ |
 | 🔵 VIP Member | 蓝色 | 普通成员+ |
 | ⚪ Member | 灰色 | 基础权限 |
-| 🤖 Bot | 紫色 | 管理员 |
+| 🤖 OLEToken Bot | 紫色 | 管理员 |
 
 ## Bot 命令
 
@@ -68,7 +63,7 @@ OLETOKEN 中转站
 ### 1. 创建 Discord Bot
 
 1. 访问 https://discord.com/developers/applications
-2. 点击 "New Application"，命名为 "OLETOKEN Bot"
+2. 点击 "New Application"，命名为 "OLEToken Bot"
 3. 进入 Bot 页面 → Reset Token → 复制 Token
 4. 开启 Privileged Gateway Intents:
    - ✅ Presence Intent
