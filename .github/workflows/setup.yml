@@ -3,23 +3,22 @@ name: Setup OLETOKEN Discord Server
 on:
   workflow_dispatch:
     inputs:
-      action:
-        description: 'Setup action'
+      guild_id:
+        description: 'Discord Server ID (右键服务器复制ID)'
         required: true
-        default: 'full_setup'
-        type: choice
-        options:
-          - full_setup
-          - create_channels
-          - create_roles
-          - post_announcements
+        type: string
+      bot_token:
+        description: 'Discord Bot Token (留空则使用secrets中的DISCORD_TOKEN)'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   setup:
     runs-on: ubuntu-latest
     env:
-      DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-      GUILD_ID: ${{ secrets.GUILD_ID }}
+      DISCORD_TOKEN: ${{ inputs.bot_token != '' && inputs.bot_token || secrets.DISCORD_TOKEN }}
+      GUILD_ID: ${{ inputs.guild_id }}
       OLETOKEN_API_URL: ${{ secrets.OLETOKEN_API_URL }}
       OLETOKEN_SITE_URL: ${{ secrets.OLETOKEN_SITE_URL }}
     
