@@ -332,8 +332,20 @@ def setup_server():
     print("\n[3/4] 发布公告内容...")
 
     # 公告频道发欢迎消息
-    welcome_result = api("POST", f"/guilds/{GUILD_ID}/channels",
-                         data={"name": "welcome", "type": 0, "topic": "欢迎来到OLETOKEN社区", "parent_id": ""})
+    # 在信息中心分类下创建欢迎频道
+    channels_list = api("GET", f"/guilds/{GUILD_ID}/channels")
+    info_cat_id = None
+    if isinstance(channels_list, list):
+        for ch in channels_list:
+            if ch.get("name") == "信息中心" or (ch.get("type") == 4 and "信息" in ch.get("name", "")):
+                info_cat_id = ch.get("id")
+                break
+    
+    welcome_data = {"name": "welcome", "type": 0, "topic": "欢迎来到OLEToken社区"}
+    if info_cat_id:
+        welcome_data["parent_id"] = info_cat_id
+    
+    welcome_result = api("POST", f"/guilds/{GUILD_ID}/channels", data=welcome_data)
     if "id" in welcome_result:
         api("POST", f"/channels/{welcome_result['id']}/messages",
             data={"embeds": [WELCOME_EMBED]})
