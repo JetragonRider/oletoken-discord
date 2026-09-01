@@ -1,0 +1,60 @@
+name: Setup OLETOKEN Discord Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Setup action'
+        required: true
+        default: 'full_setup'
+        type: choice
+        options:
+          - full_setup
+          - create_channels
+          - create_roles
+          - post_announcements
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    env:
+      DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+      GUILD_ID: ${{ secrets.GUILD_ID }}
+      OLETOKEN_API_URL: ${{ secrets.OLETOKEN_API_URL }}
+      OLETOKEN_SITE_URL: ${{ secrets.OLETOKEN_SITE_URL }}
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Verify environment
+        run: |
+          if [ -z "$DISCORD_TOKEN" ]; then
+            echo "::error::DISCORD_TOKEN secret is not set!"
+            exit 1
+          fi
+          if [ -z "$GUILD_ID" ]; then
+            echo "::error::GUILD_ID secret is not set!"
+            exit 1
+          fi
+          echo "✓ Environment verified"
+          echo "Guild ID: $GUILD_ID"
+      
+      - name: Run setup script
+        run: |
+          python setup_server.py
+      
+      - name: Upload server config
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-config
+          path: server_config.json
+          retention-days: 90
