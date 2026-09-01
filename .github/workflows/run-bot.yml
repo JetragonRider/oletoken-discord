@@ -1,0 +1,63 @@
+name: Run OLETOKEN Bot
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 每6小时重启 (GitHub Actions 6小时超时限制)
+    - cron: "0 */6 * * *"
+
+jobs:
+  run-bot:
+    timeout-minutes: 350
+    runs-on: ubuntu-latest
+    env:
+      DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+      GUILD_ID: ${{ secrets.GUILD_ID }}
+      OLETOKEN_API_URL: ${{ secrets.OLETOKEN_API_URL }}
+      OLETOKEN_SITE_URL: ${{ secrets.OLETOKEN_SITE_URL }}
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Verify environment
+        run: |
+          if [ -z "$DISCORD_TOKEN" ]; then
+            echo "::error::DISCORD_TOKEN secret is not set!"
+            exit 1
+          fi
+          echo "✓ Token verified"
+      
+      - name: Start OLETOKEN Bot
+        run: |
+          echo "Starting OLETOKEN Bot at $(date)"
+          python bot.py &
+          BOT_PID=$!
+          echo "Bot PID: $BOT_PID"
+          
+          # 保持运行直到超时或崩溃
+          for i in $(seq 1 42); do
+            sleep 300
+            if kill -0 $BOT_PID 2>/dev/null; then
+              echo "[$(date)] Bot running... (check $i/42)"
+            else
+              echo "[$(date)] Bot stopped! Exit code: $?"
+              exit 1
+            fi
+          done
+          
+          echo "[$(date)] Bot reached GitHub Actions time limit, will restart via cron"
+      
+      - name: Cleanup
+        if: always()
+        run: |
+          pkill -f "python bot.py" 2>/dev/null || true
+          echo "Cleanup done"
