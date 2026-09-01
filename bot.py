@@ -30,7 +30,7 @@ BASE = "https://discord.com/api/v10"
 HEADERS = {
     "Authorization": f"Bot {BOT_TOKEN}",
     "Content-Type": "application/json",
-    "User-Agent": "OLETOKEN-Bot (1.0)"
+    "User-Agent": "OLEToken-Bot (1.0)"
 }
 
 # ============================================================
@@ -39,7 +39,7 @@ HEADERS = {
 FAQ_RESPONSES = {
     "help": {
         "embeds": [{
-            "title": "🤖 OLETOKEN Bot 命令列表",
+            "title": "🤖 OLEToken Bot 命令列表",
             "description": (
                 "`!help` - 显示此帮助\n"
                 "`!pricing` - 查看定价\n"
@@ -51,7 +51,7 @@ FAQ_RESPONSES = {
                 "`!support` - 联系技术支持\n"
             ),
             "color": 0x0099FF,
-            "footer": {"text": "OLETOKEN Bot"}
+            "footer": {"text": "OLEToken Bot"}
         }]
     },
     "pricing": {
@@ -351,7 +351,7 @@ def run_bot():
         f"Connection: Upgrade\r\n"
         f"Sec-WebSocket-Key: {key}\r\n"
         f"Sec-WebSocket-Version: 13\r\n"
-        f"User-Agent: OLETOKEN-Bot\r\n"
+        f"User-Agent: OLEToken-Bot\r\n"
         f"\r\n"
     )
     ws_sock.send(handshake.encode())
@@ -487,7 +487,7 @@ def run_bot():
 
 if __name__ == "__main__":
     print("=" * 50)
-    print("OLETOKEN Discord Bot")
+    print("OLEToken Discord Bot")
     print("=" * 50)
     while True:
         try:
