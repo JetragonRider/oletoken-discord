@@ -23,7 +23,7 @@ BASE = "https://discord.com/api/v10"
 HEADERS = {
     "Authorization": f"Bot {BOT_TOKEN}",
     "Content-Type": "application/json",
-    "User-Agent": "OLETOKEN-Bot (1.0)"
+    "User-Agent": "OLEToken-Bot (1.0)"
 }
 
 def api(method, path, data=None, max_retries=3):
@@ -94,7 +94,7 @@ ROLES = [
         "mentionable": False
     },
     {
-        "name": "🤖 Bot",
+        "name": "🤖 OLEToken Bot",
         "color": 0x5865F2,
         "permissions": 0x1FEDC9DF,
         "hoist": False,
@@ -137,15 +137,6 @@ CATEGORIES = [
             {"name": "tech-talk", "type": 0, "topic": "技术交流 - API使用/性能/最佳实践"},
             {"name": "support", "type": 0, "topic": "问题反馈 - 遇到问题请在此描述"},
             {"name": "suggestions", "type": 0, "topic": "功能建议 - 你的想法很重要"}
-        ]
-    },
-    {
-        "name": "🤖 模型讨论",
-        "channels": [
-            {"name": "claude-models", "type": 0, "topic": "Claude模型讨论 - Opus/Sonnet/Haiku"},
-            {"name": "gpt-models", "type": 0, "topic": "GPT模型讨论 - GPT-4o/o1/o3等"},
-            {"name": "cn-models", "type": 0, "topic": "国产模型 - DeepSeek/Qwen/GLM/Kimi等"},
-            {"name": "image-models", "type": 0, "topic": "图像模型 - DALL-E/SD/Flux等"}
         ]
     },
     {
